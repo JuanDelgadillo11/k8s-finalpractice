@@ -1,0 +1,32 @@
+# Use root/example as user/password credentials
+version: '3.1'
+
+services:
+
+  db:
+    image: mysql
+    restart: always
+    command: --init-file /data/application/init.sql
+    volumes:
+      - ./init.sql:/data/application/init.sql
+    environment:
+      MYSQL_DATABASE: flask
+      MYSQL_ROOT_PASSWORD: password
+    ports:
+    - 3306:3306
+
+  adminer:
+    image: adminer
+    restart: always
+    ports:
+      - 8080:8080
+
+  practice-app:
+    image: jp4all/practice-app
+    environment:
+      MYSQL_HOST: db
+      MYSQL_PORT: 3306
+    ports:
+      - 5000:5000
+    depends_on:
+      - db
