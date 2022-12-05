@@ -1,0 +1,38 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: database
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      tier: db-1
+  template:
+    metadata:
+      name: db-1
+      labels:
+        tier: db-1
+    spec:
+      containers:
+      - name: mysql
+        image: mysql
+        resources:
+          limits:
+            memory: "128Mi"
+            cpu: "500m"
+        ports:
+        - containerPort: 3306
+        env:
+          - name: DATABASE_NAME
+            valueFrom:
+              configMapKeyRef:
+                name: app-configs
+                key: DATABASE_NAME
+          - name: MYSQL_ROOT_PASSWORD
+            valueFrom:
+              secretKeyRef:
+                name: mysecret
+                key: MYSQL_ROOT_PASSWORD
+
+              
+

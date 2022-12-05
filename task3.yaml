@@ -1,0 +1,26 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: app-svc
+  labels:
+    tier: web-servers    
+spec:
+  type: ClusterIP
+  selector: 
+    tier: web-server
+  ports:
+    - targetport: 5000 
+      port: 5000
+---
+apiVersion: v1
+kind: Pod
+metadata:
+  name: practice-app
+  labels:
+    tier: web-server
+spec:
+  containers:
+    - name: practice-app
+      image: jp4all/practice-app
+      ports:
+      - containerPort: 5000
