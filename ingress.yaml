@@ -1,0 +1,36 @@
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: myingress
+spec:
+  rules:
+  - host: "mysql.local"
+    http:
+      paths:
+        - path: "/"
+          pathType: Prefix      
+          backend:
+            service:
+              name: mysql-svc
+              port: 
+                number: 3306
+  - host: "practice-app.local"
+    http:
+      paths:
+        - path: "/"
+          pathType: Prefix      
+          backend:
+            service:
+              name: app-svc
+              port: 
+                number: 5000
+  - host: "adminer.local"
+    http:
+      paths:
+        - path: "/"
+          pathType: Prefix      
+          backend:
+            service:
+              name: adminier-svc
+              port: 
+                number: 8080

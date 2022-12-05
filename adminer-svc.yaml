@@ -1,0 +1,13 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: adminer-svc
+  labels:
+    tier: controller-server    
+spec:
+  type: ClusterIP
+  selector: 
+    tier: controller
+  ports:
+    - targetport: 8080 
+      port: 8080
